@@ -1,0 +1,35 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-policy",
+      "description": "Abstract architecture representing Indian policy growth",
+      "imageUrl": "https://picsum.photos/seed/101/1200/600",
+      "imageHint": "architecture india"
+    },
+    {
+      "id": "culture-feature",
+      "description": "Traditional Indian art with modern twist",
+      "imageUrl": "https://picsum.photos/seed/102/800/1000",
+      "imageHint": "indian art"
+    },
+    {
+      "id": "economy-data",
+      "description": "Visualizing India's GDP growth through industrial imagery",
+      "imageUrl": "https://picsum.photos/seed/103/600/400",
+      "imageHint": "industry development"
+    },
+    {
+      "id": "global-indian",
+      "description": "Portrait of a young Indian professional in a global tech hub",
+      "imageUrl": "https://picsum.photos/seed/104/600/800",
+      "imageHint": "indian professional"
+    },
+    {
+      "id": "educational-future",
+      "description": "A rural school in India integrating digital technology",
+      "imageUrl": "https://picsum.photos/seed/105/800/500",
+      "imageHint": "education technology"
+    }
+  ]
+}
