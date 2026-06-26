@@ -1,0 +1,43 @@
+services:
+  - type: web
+    name: spacegaps
+    runtime: docker
+    plan: starter          # upgrade to standard for more RAM if needed
+    healthCheckPath: /
+    autoDeploy: true
+
+    envVars:
+      - key: APP_NAME
+        value: SpaceGaps
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true   # Render generates a random key on first deploy
+      - key: APP_URL
+        value: https://spacegapssite.onrender.com
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        sync: false         # set manually in Render dashboard
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        sync: false         # set manually in Render dashboard
+      - key: DB_USERNAME
+        sync: false         # set manually in Render dashboard
+      - key: DB_PASSWORD
+        sync: false         # set manually in Render dashboard
+      - key: FILESYSTEM_DISK
+        value: local
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: error
