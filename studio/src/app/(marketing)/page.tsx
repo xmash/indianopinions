@@ -1,24 +1,13 @@
-import { ArticleCard } from '@/components/editorial/ArticleCard';
+import { ArticleGridSection } from '@/components/sections/ArticleGridSection';
+import { DailyBriefRail } from '@/components/sections/DailyBriefRail';
+import { EmptyState } from '@/components/sections/EmptyState';
+import { FeaturedArticleSection } from '@/components/sections/FeaturedArticleSection';
+import { IntelligenceNetworkCta } from '@/components/sections/IntelligenceNetworkCta';
+import { StrategyNotePanel } from '@/components/sections/StrategyNotePanel';
 import { DataLabModule } from '@/components/editorial/DataLabModule';
 import { WeeklyLetter } from '@/components/editorial/WeeklyLetter';
-import {
-  ApiArticle,
-  articleCategory,
-  formatArticleDate,
-  getHomepageLayout,
-} from '@/lib/api';
-
-function toCardProps(article: ApiArticle) {
-  return {
-    slug: article.slug,
-    category: articleCategory(article),
-    title: article.title,
-    excerpt: article.excerpt || '',
-    author: article.author,
-    date: formatArticleDate(article.published_at) || article.reading_time_label || '',
-    image: article.featured_image || undefined,
-  };
-}
+import { getHomepageLayout } from '@/lib/api';
+import { toArticleCardProps } from '@/lib/article-props';
 
 export default async function Home() {
   const layout = await getHomepageLayout();
@@ -27,70 +16,41 @@ export default async function Home() {
   const brief = layout?.sections.daily_brief?.items ?? [];
   const latest = layout?.sections.latest?.items ?? [];
 
+  const hasContent = Boolean(hero || strategic.length || brief.length || latest.length);
+
+  if (!hasContent) {
+    return (
+      <EmptyState
+        title="No stories published yet"
+        message="The editorial desk is preparing the first edition. Check back soon or browse our intelligence brief."
+        action={{ label: 'Intelligence Brief', href: '/brief' }}
+      />
+    );
+  }
+
   return (
     <>
-      {hero && (
-        <section className="section">
-          <ArticleCard {...toCardProps(hero)} layout="featured" />
-        </section>
-      )}
+      {hero && <FeaturedArticleSection article={toArticleCardProps(hero)} />}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 section">
         <div className="lg:col-span-8">
-          {strategic.length > 0 && (
-            <>
-              <h2 className="section-heading">Strategic Analysis</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
-                {strategic.map((article) => (
-                  <ArticleCard key={article.id} {...toCardProps(article)} />
-                ))}
-              </div>
-            </>
-          )}
+          <ArticleGridSection
+            title="Strategic Analysis"
+            articles={strategic.map(toArticleCardProps)}
+          />
 
-          {latest.length > 0 && (
-            <div className="mt-12">
-              <h2 className="section-heading">More Stories</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
-                {latest.map((article) => (
-                  <ArticleCard key={article.id} {...toCardProps(article)} />
-                ))}
-              </div>
-            </div>
-          )}
+          <ArticleGridSection
+            title="More Stories"
+            articles={latest.map(toArticleCardProps)}
+            className="mt-12"
+          />
 
-          <div className="cta-band mt-12">
-            <div className="flex-1">
-              <h3 className="text-xl font-bold mb-2">The Intelligence Network</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Join our pool of contributing analysts, diplomats, and industry leaders. We value qualitative rigor over quantitative noise.
-              </p>
-            </div>
-            <button type="button" className="btn-primary whitespace-nowrap">
-              Submit Thesis
-            </button>
-          </div>
+          <IntelligenceNetworkCta />
         </div>
 
         <aside className="sidebar-panel lg:col-span-4">
-          {brief.length > 0 && (
-            <>
-              <h2 className="section-heading text-accent border-accent/20">The Daily Brief</h2>
-              <div className="space-y-2">
-                {brief.map((article) => (
-                  <ArticleCard key={article.id} {...toCardProps(article)} layout="minimal" />
-                ))}
-              </div>
-            </>
-          )}
-
-          <div className="quote-panel">
-            <h4 className="font-headline font-bold text-lg mb-2">Strategy Note</h4>
-            <p className="text-sm italic text-muted-foreground mb-4 leading-relaxed">
-              &ldquo;In foreign policy, there are no permanent friends or enemies, only permanent interests.&rdquo;
-            </p>
-            <div className="eyebrow text-[10px]">— Editorial Board, IndianOpinions</div>
-          </div>
+          <DailyBriefRail articles={brief.map(toArticleCardProps)} />
+          <StrategyNotePanel />
         </aside>
       </div>
 

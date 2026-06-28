@@ -27,9 +27,9 @@ return [
         ],
         'daily_brief' => [
             'label' => 'Daily brief sidebar',
-            'description' => 'Right-rail brief items',
-            'count' => 4,
-            'fallback' => 'latest',
+            'description' => 'Right rail — one lead story per editorial desk (8 hubs, excludes Archive)',
+            'count' => 8,
+            'fallback' => 'hub_leads',
         ],
         'latest' => [
             'label' => 'More stories',
@@ -69,6 +69,7 @@ return [
         'diaspora',
         'opinion',
         'analysis',
+        'archive',
     ],
 
 ];

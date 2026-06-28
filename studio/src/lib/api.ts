@@ -104,6 +104,8 @@ export function getBriefDates(): Promise<string[]> {
   return fetchJson<{ dates: string[] }>('/api/brief/dates').then((payload) => payload?.dates ?? []);
 }
 
+export { getArticlesByCategory } from '@/lib/articles';
+
 export function formatArticleDate(iso: string | null | undefined): string {
   if (!iso) {
     return '';

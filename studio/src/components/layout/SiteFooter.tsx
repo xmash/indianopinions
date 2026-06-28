@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { footerLegalLinks } from '@/config/footer';
+import { footerLinks } from '@/config/footer';
+import { SiteLogo } from '@/components/layout/SiteLogo';
 import { site } from '@/config/site';
 
 export function SiteFooter() {
@@ -7,11 +8,11 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="container-app site-footer-inner">
         <div className="site-footer-brand">
-          <h2 className="site-footer-logo">{site.name}</h2>
+          <SiteLogo as="h2" className="site-footer-logo" />
           <p className="site-footer-legal">{site.footerLegal}</p>
         </div>
         <nav className="site-footer-nav" aria-label="Footer">
-          {footerLegalLinks.map((link) => (
+          {footerLinks.map((link) => (
             <Link key={link.href} href={link.href} className="site-footer-link">
               {link.label}
             </Link>

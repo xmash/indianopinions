@@ -55,25 +55,51 @@ class LayoutService
 
             $missing = collect($slots)->filter()->count();
             if ($missing < $count) {
-                $fallbackPosts = $this->fallbackPosts(
-                    $definition['fallback'] ?? 'latest',
-                    $hubSlug,
-                    $count - $missing,
-                    $usedPostIds
-                );
+                if (($definition['fallback'] ?? '') === 'hub_leads') {
+                    $hubSlugs = config('intelligence_brief.hub_slugs', []);
 
-                foreach ($slots as $index => $slot) {
-                    if ($slot !== null) {
-                        continue;
+                    foreach ($slots as $index => $slot) {
+                        if ($slot !== null) {
+                            continue;
+                        }
+
+                        $hubSlug = $hubSlugs[$index] ?? null;
+
+                        if (! $hubSlug) {
+                            continue;
+                        }
+
+                        $post = $this->leadPostForHub($hubSlug);
+
+                        if (! $post) {
+                            continue;
+                        }
+
+                        $usedPostIds[] = $post->id;
+                        $slots[$index] = $this->formatArticle($post, curated: false);
                     }
+                } else {
+                    $fallbackPosts = $this->fallbackPosts(
+                        $definition['fallback'] ?? 'latest',
+                        $hubSlug,
+                        $count - $missing,
+                        $usedPostIds
+                    );
 
-                    $post = $fallbackPosts->shift();
-                    if (! $post) {
-                        continue;
+                    foreach ($slots as $index => $slot) {
+                        if ($slot !== null) {
+                            continue;
+                        }
+
+                        $post = $fallbackPosts->shift();
+
+                        if (! $post) {
+                            continue;
+                        }
+
+                        $usedPostIds[] = $post->id;
+                        $slots[$index] = $this->formatArticle($post, curated: false);
                     }
-
-                    $usedPostIds[] = $post->id;
-                    $slots[$index] = $this->formatArticle($post, curated: false);
                 }
             }
 
@@ -111,6 +137,29 @@ class LayoutService
         }
 
         return $query->limit($limit)->get();
+    }
+
+    private function leadPostForHub(string $hubSlug): ?Post
+    {
+        $slot = LayoutSlot::query()
+            ->where('page', 'hub')
+            ->where('section', 'hero')
+            ->where('position', 0)
+            ->where('hub_slug', $hubSlug)
+            ->with(['post.categories', 'post.tags'])
+            ->first();
+
+        $post = $slot?->post;
+
+        if ($post && $post->status === PostStatus::Published->value) {
+            return $post;
+        }
+
+        return Post::published()
+            ->whereHas('categories', fn ($q) => $q->where('slug', $hubSlug))
+            ->with(['categories', 'tags'])
+            ->latest('published_at')
+            ->first();
     }
 
     /** @return array<string, mixed> */

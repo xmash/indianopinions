@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { PageHeader } from '@/components/sections/PageHeader';
 import { site } from '@/config/site';
 import type { IntelligenceBrief } from '@/lib/api';
 
@@ -11,14 +12,17 @@ export function IntelligenceBriefView({ brief }: IntelligenceBriefViewProps) {
     brief.edition_date === new Date().toISOString().slice(0, 10);
 
   return (
-    <div className="brief-page section max-w-4xl mx-auto">
-      <header className="brief-header">
-        <p className="eyebrow mb-3">Intelligence Brief</p>
-        <h1 className="brief-title">{isToday ? "Today's Digest" : 'Daily Digest'}</h1>
+    <div className="brief-page max-w-4xl mx-auto">
+      <PageHeader
+        eyebrow="Intelligence Brief"
+        title={isToday ? "Today's Digest" : 'Daily Digest'}
+        align="center"
+        className="brief-header border-b border-border pb-10 mb-10"
+      >
         <p className="brief-edition">{brief.edition_label}</p>
         <p className="brief-intro">
-          Ten stories across our editorial desks — two lead assessments and one dispatch from each hub.
-          Read in five minutes; follow the full analysis in our reporting when you need depth.
+          Two lead assessments and one dispatch from each editorial desk — eight hubs in equal
+          measure, drawn from the lead story on every section front. Read in five minutes.
         </p>
         {(brief.previous_date || brief.next_date) && (
           <nav className="brief-edition-nav" aria-label="Brief editions">
@@ -38,7 +42,7 @@ export function IntelligenceBriefView({ brief }: IntelligenceBriefViewProps) {
             )}
           </nav>
         )}
-      </header>
+      </PageHeader>
 
       <section className="brief-section" aria-labelledby="brief-leads-heading">
         <h2 id="brief-leads-heading" className="brief-section-label">

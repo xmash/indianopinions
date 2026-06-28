@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Diaspora', 'color' => '#f59e0b', 'description' => 'Global Indians and transnational perspectives.'],
             ['name' => 'Opinion', 'color' => '#8b5cf6', 'description' => 'Editorial viewpoints and commentary.'],
             ['name' => 'Analysis', 'color' => '#343131', 'description' => 'In-depth strategic and investigative analysis.'],
+            ['name' => 'Archive', 'color' => '#64748b', 'description' => 'Historical records and turning points that shaped the modern state.'],
         ];
 
         foreach ($categories as $category) {
