@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign in — Indian Opinions Editorial</title>
+    <title>Sign in — Indian Opinions Admin</title>
     @vite(['resources/css/app.css'])
 </head>
 <body class="admin-shell" style="display:flex;align-items:center;justify-content:center;padding:24px;">
     <div style="width:100%;max-width:400px;">
         <div style="text-align:center;margin-bottom:32px;">
             <h1 style="font-size:1.5rem;font-weight:700;color:var(--navy);margin:0;">Indian Opinions</h1>
-            <p style="color:var(--text-muted);margin-top:8px;font-size:14px;">Editorial Publishing House</p>
+            <p style="color:var(--text-muted);margin-top:8px;font-size:14px;">Publishing admin</p>
         </div>
 
         <div class="card">

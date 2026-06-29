@@ -2,7 +2,7 @@
 @section('page_title', 'Categories')
 
 @section('content')
-<x-admin.page-header title="Categories" subtitle="Editorial hubs and section labels">
+<x-admin.page-header title="Categories" subtitle="Hubs shown in site navigation">
     <x-slot:actions>
         <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">+ New Category</a>
     </x-slot:actions>

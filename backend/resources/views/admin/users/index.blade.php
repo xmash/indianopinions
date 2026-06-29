@@ -2,7 +2,7 @@
 @section('page_title', 'Staff')
 
 @section('content')
-<x-admin.page-header title="Editorial Staff" subtitle="Editors and writers">
+<x-admin.page-header title="Staff" subtitle="Editors and writers">
     <x-slot:actions>
         <a href="{{ route('admin.users.create') }}" class="btn btn-primary">+ Add Staff</a>
     </x-slot:actions>

@@ -1,5 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 @import 'tailwindcss';
-@import './admin-design.css';
 @plugin '@tailwindcss/typography';
 @plugin '@tailwindcss/forms';
 
@@ -133,3 +133,6 @@ html { font-size: 20px; }
 
 .prose ul, .prose ol { font-size: inherit; }
 .prose li { margin-top: 0.3em; margin-bottom: 0.3em; }
+
+/* Admin console — load last so Tailwind layers do not override sidebar/nav */
+@import './admin-design.css';

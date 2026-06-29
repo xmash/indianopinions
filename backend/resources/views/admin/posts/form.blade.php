@@ -23,7 +23,7 @@
 @endif
 
 @if($lockedForWriter)
-    <div class="alert alert-info">This article is with the editorial desk and cannot be edited until an editor sends it back for revision.</div>
+    <div class="alert alert-info">This article is in review and cannot be edited until an editor sends it back for changes.</div>
 @endif
 
 @if(isset($post) && $post->editorial_notes && in_array($post->status, ['changes_requested', 'rejected']))
@@ -109,7 +109,7 @@
         <div style="display: grid; gap: 16px; align-content: start;">
             @if(auth()->user()->isEditor())
                 <div class="card">
-                    <div class="card-head"><h3 class="card-title">Editorial</h3></div>
+                    <div class="card-head"><h3 class="card-title">Featured</h3></div>
                     <div class="card-body">
                         <label style="display:flex;gap:8px;align-items:flex-start;font-size:14px;cursor:pointer;">
                             <input type="checkbox" name="featured" value="1" form="article-form" style="margin-top:3px;"
@@ -160,7 +160,7 @@
                     @endif
 
                     @if(auth()->user()->isWriter() && in_array($post->status, ['submitted', 'in_review']))
-                        <p style="font-size:14px;color:var(--text-muted);margin:0;">With the editorial desk — you will be notified when it is sent back for revision.</p>
+                        <p style="font-size:14px;color:var(--text-muted);margin:0;">In the review queue — you will be notified when an editor sends it back for changes.</p>
                     @elseif($post->status === 'published' && auth()->user()->isWriter())
                         <p style="font-size:14px;color:var(--text-muted);margin:0;">Published {{ $post->published_at?->format('M j, Y g:i A') }}.</p>
                     @elseif($post->status === 'archived' && auth()->user()->isEditor())
@@ -200,7 +200,7 @@
     @else
         @if(auth()->user()->isEditor())
             <div class="card">
-                <div class="card-head"><h3 class="card-title">Editorial</h3></div>
+                <div class="card-head"><h3 class="card-title">Featured</h3></div>
                 <div class="card-body">
                     <label style="display:flex;gap:8px;align-items:flex-start;font-size:14px;cursor:pointer;">
                         <input type="checkbox" name="featured" value="1" form="article-form" style="margin-top:3px;"
@@ -215,7 +215,7 @@
         @else
         <div class="card">
             <div class="card-body">
-                <p style="font-size:14px;color:var(--text-muted);margin:0;">Save your draft first, then submit it to the editorial desk for approval.</p>
+                <p style="font-size:14px;color:var(--text-muted);margin:0;">Save your draft first, then submit it for review.</p>
             </div>
         </div>
         @endif

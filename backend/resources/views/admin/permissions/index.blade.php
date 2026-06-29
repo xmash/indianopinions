@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('page_title', 'Permissions Matrix')
+@section('page_title', 'Permissions')
 
 @section('content')
-<x-admin.page-header title="Permissions Matrix" subtitle="What each role can see and do in the editorial console" />
+<x-admin.page-header title="Permissions" subtitle="What each role can access in the admin" />
 
 <div class="card">
     <table class="data-table">
@@ -39,7 +39,7 @@
     <div class="card-body">
         <p style="margin:0;font-size:14px;color:var(--text-muted);">
             Writers only see <strong>Dashboard</strong> and <strong>Articles</strong> in the sidebar.
-            Staff, layout orchestration, review queue, and desk tools are editor-only.
+            Review queue, layout tools, categories, tags, gallery, staff, and permissions are editor-only.
             Empty layout slots on the public site fall back to the latest published articles.
         </p>
     </div>

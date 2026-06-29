@@ -2,7 +2,7 @@
 @section('page_title', 'Articles')
 
 @section('content')
-<x-admin.page-header title="Articles" subtitle="Manage the editorial pipeline">
+<x-admin.page-header title="Articles" subtitle="Draft, review, and publish stories">
     <x-slot:actions>
         @can('create', App\Models\Post::class)
             <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">+ New Article</a>

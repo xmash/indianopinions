@@ -2,7 +2,7 @@
 @section('page_title', 'Dashboard')
 
 @section('content')
-<x-admin.page-header title="Editorial Dashboard" :subtitle="auth()->user()->roleLabel().' workspace'">
+<x-admin.page-header title="Dashboard" :subtitle="'Signed in as '.auth()->user()->roleLabel()">
     <x-slot:actions>
         <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">+ New Article</a>
     </x-slot:actions>
