@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\User;
 use App\Services\PostWorkflowService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -36,24 +37,69 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
+        $filters = $request->only(['search', 'status', 'author', 'category', 'sort', 'direction']);
+
         $query = Post::with(['categories', 'authorUser'])
-            ->forUser($request->user())
-            ->latest();
+            ->forUser($request->user());
+
+        if ($search = trim($request->string('search')->toString())) {
+            $needle = '%'.mb_strtolower($search).'%';
+            $query->where(function ($q) use ($needle) {
+                $q->whereRaw('LOWER(title) LIKE ?', [$needle])
+                    ->orWhereRaw('LOWER(slug) LIKE ?', [$needle])
+                    ->orWhereRaw('LOWER(author) LIKE ?', [$needle])
+                    ->orWhereRaw('LOWER(excerpt) LIKE ?', [$needle]);
+            });
+        }
 
         if ($status = $request->string('status')->toString()) {
             $query->where('status', $status);
         }
 
-        if ($request->boolean('mine') && $request->user()->isWriter()) {
-            $query->where('user_id', $request->user()->id);
+        if ($request->user()->isEditor() && ($authorId = $request->integer('author'))) {
+            $query->where('user_id', $authorId);
         }
 
+        if ($categoryId = $request->integer('category')) {
+            $query->whereHas('categories', fn ($q) => $q->where('categories.id', $categoryId));
+        }
+
+        $sort = $request->string('sort')->toString() ?: 'updated';
+        $direction = $request->string('direction')->toString() === 'asc' ? 'asc' : 'desc';
+
+        match ($sort) {
+            'title' => $query->orderBy('title', $direction),
+            'author' => $query->orderBy('author', $direction)->orderBy('title'),
+            'status' => $query->orderBy('status', $direction)->orderByDesc('updated_at'),
+            'category' => $query->orderByRaw(
+                '(SELECT MIN(categories.name) FROM categories
+                  INNER JOIN category_post ON categories.id = category_post.category_id
+                  WHERE category_post.post_id = posts.id) '.($direction === 'asc' ? 'ASC' : 'DESC')
+            )->orderBy('title'),
+            default => $query->orderBy('updated_at', $direction),
+        };
+
         $posts = $query->paginate(20)->withQueryString();
+
+        $authors = $request->user()->isEditor()
+            ? User::query()
+                ->whereHas('posts', fn ($q) => $q->forUser($request->user()))
+                ->orderBy('name')
+                ->get(['id', 'name'])
+            : collect();
 
         return view('admin.posts.index', [
             'posts' => $posts,
             'statuses' => PostStatus::cases(),
-            'currentStatus' => $status,
+            'categories' => Category::orderBy('name')->get(['id', 'name']),
+            'authors' => $authors,
+            'filters' => $filters,
+            'currentStatus' => $filters['status'] ?? null,
+            'currentSearch' => $filters['search'] ?? '',
+            'currentAuthor' => (int) ($filters['author'] ?? 0),
+            'currentCategory' => (int) ($filters['category'] ?? 0),
+            'currentSort' => $sort,
+            'currentDirection' => $direction,
         ]);
     }
 

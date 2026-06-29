@@ -7,6 +7,7 @@
   NODE_VERSION = "20"
   API_URL = "https://indianopinions-indianopinions.up.railway.app"
   NEXT_PUBLIC_API_URL = "https://indianopinions-indianopinions.up.railway.app"
+  NEXT_PUBLIC_ADMIN_URL = "https://indianopinions-indianopinions.up.railway.app/admin/login"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
