@@ -3,6 +3,8 @@ set -e
 
 cd /app
 
+echo "==> Indian Opinions boot (/start.sh)"
+
 # Railway sets RAILWAY_PUBLIC_DOMAIN; use it when APP_URL is not configured.
 if [ -n "$RAILWAY_PUBLIC_DOMAIN" ] && [ -z "$APP_URL" ]; then
     export APP_URL="https://${RAILWAY_PUBLIC_DOMAIN}"
@@ -23,6 +25,12 @@ fi
 
 echo "==> DB config: ${DATABASE_URL:+DATABASE_URL set}${DATABASE_URL:-host=${DB_HOST:-?} port=${DB_PORT:-5432} db=${DB_DATABASE:-?}}"
 
+# Railway sets CACHE_STORE=database — use file drivers until migrations create tables.
+SAVED_CACHE_STORE="${CACHE_STORE:-database}"
+SAVED_SESSION_DRIVER="${SESSION_DRIVER:-database}"
+export CACHE_STORE=file
+export SESSION_DRIVER=file
+
 # ── Ensure storage directories exist ─────────────────────────
 mkdir -p storage/framework/views \
          storage/framework/cache/data \
@@ -32,6 +40,8 @@ mkdir -p storage/framework/views \
          bootstrap/cache
 chmod -R 775 storage bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
+
+rm -f bootstrap/cache/config.php bootstrap/cache/routes-v7.php 2>/dev/null || true
 
 # ── Wait for PostgreSQL (max 60s) ─────────────────────────────
 echo "==> Waiting for PostgreSQL..."
@@ -47,19 +57,20 @@ until php docker/wait-for-postgres.php 2>/tmp/pg_error; do
 done
 echo "  PostgreSQL is ready."
 
-# ── Migrations first (CACHE_STORE=database needs cache/sessions tables) ──
+# ── Migrations + seed (must run before any database cache/session use) ──
 echo "==> Running migrations..."
 php artisan migrate --force
 
-# ── Seed admin user + categories (idempotent) ────────────────
 echo "==> Seeding..."
 php artisan db:seed --force
 
-# ── Storage symlink (after DB is up; safe for admin uploads) ─
 php artisan storage:link --force 2>/dev/null || true
 
-# ── Clear caches (only after migrations — never before) ───────
-echo "==> Clearing caches..."
+# ── Restore production cache/session drivers ──────────────────
+export CACHE_STORE="${SAVED_CACHE_STORE}"
+export SESSION_DRIVER="${SAVED_SESSION_DRIVER}"
+
+echo "==> Building config cache..."
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear

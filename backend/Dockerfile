@@ -52,8 +52,9 @@ RUN mkdir -p storage/framework/{sessions,views,cache} storage/logs bootstrap/cac
     && chmod -R 775 storage bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
-# ── Config & start scripts ───────────────────────────────────
+# ── Config & start scripts (copy last — invalidates cache when boot script changes) ──
 COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/wait-for-postgres.php docker/wait-for-postgres.php
 COPY docker/start.sh /start.sh
 RUN chmod +x /start.sh
 

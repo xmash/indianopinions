@@ -5,6 +5,7 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
+startCommand = "/start.sh"
 healthcheckPath = "/up"
 healthcheckTimeout = 120
 restartPolicyType = "ON_FAILURE"
