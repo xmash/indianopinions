@@ -65,14 +65,6 @@ echo "  PostgreSQL is ready."
 echo "==> Running migrations..."
 php artisan migrate --force
 
-echo "==> Seeding (fresh DB only)..."
-CATEGORY_COUNT=$(php artisan tinker --no-interaction --execute="echo \App\Models\Category::count();" 2>/dev/null | tail -1)
-if [ "${CATEGORY_COUNT:-0}" = "0" ]; then
-    php artisan db:seed --force
-else
-    echo "  Skipping — database already seeded (${CATEGORY_COUNT} categories found)."
-fi
-
 php artisan storage:link --force 2>/dev/null || true
 
 echo "==> Clearing caches (still using file drivers)..."
