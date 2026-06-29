@@ -65,8 +65,13 @@ echo "  PostgreSQL is ready."
 echo "==> Running migrations..."
 php artisan migrate --force
 
-echo "==> Seeding..."
-php artisan db:seed --force
+echo "==> Seeding (fresh DB only)..."
+CATEGORY_COUNT=$(php artisan tinker --no-interaction --execute="echo \App\Models\Category::count();" 2>/dev/null | tail -1)
+if [ "${CATEGORY_COUNT:-0}" = "0" ]; then
+    php artisan db:seed --force
+else
+    echo "  Skipping — database already seeded (${CATEGORY_COUNT} categories found)."
+fi
 
 php artisan storage:link --force 2>/dev/null || true
 
@@ -81,7 +86,7 @@ export CACHE_STORE="${SAVED_CACHE_STORE}"
 export SESSION_DRIVER="${SAVED_SESSION_DRIVER}"
 
 echo "==> Building config cache..."
-php artisan config:cache
+php artisan config:cache || echo "WARNING: config:cache failed — continuing without cache"
 
 # ── Assets check ─────────────────────────────────────────────
 ls -la /app/public/build/assets/ 2>/dev/null || echo "WARNING: public/build/assets not found"
