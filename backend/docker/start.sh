@@ -66,15 +66,17 @@ php artisan db:seed --force
 
 php artisan storage:link --force 2>/dev/null || true
 
+echo "==> Clearing caches (still using file drivers)..."
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+php artisan cache:clear
+
 # ── Restore production cache/session drivers ──────────────────
 export CACHE_STORE="${SAVED_CACHE_STORE}"
 export SESSION_DRIVER="${SAVED_SESSION_DRIVER}"
 
 echo "==> Building config cache..."
-php artisan config:clear
-php artisan route:clear
-php artisan view:clear
-php artisan cache:clear
 php artisan config:cache
 
 # ── Assets check ─────────────────────────────────────────────
