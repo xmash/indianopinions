@@ -33,9 +33,6 @@ mkdir -p storage/framework/views \
 chmod -R 775 storage bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
 
-# ── Storage symlink ───────────────────────────────────────────
-php artisan storage:link --force 2>/dev/null || true
-
 # ── Wait for PostgreSQL (max 60s) ─────────────────────────────
 echo "==> Waiting for PostgreSQL..."
 TRIES=0
@@ -50,18 +47,24 @@ until php docker/wait-for-postgres.php 2>/tmp/pg_error; do
 done
 echo "  PostgreSQL is ready."
 
-# ── Laravel caches ───────────────────────────────────────────
-echo "==> Caching config..."
-php artisan optimize:clear
-php artisan config:cache
-
-# ── Migrations ───────────────────────────────────────────────
+# ── Migrations first (CACHE_STORE=database needs cache/sessions tables) ──
 echo "==> Running migrations..."
 php artisan migrate --force
 
 # ── Seed admin user + categories (idempotent) ────────────────
 echo "==> Seeding..."
 php artisan db:seed --force
+
+# ── Storage symlink (after DB is up; safe for admin uploads) ─
+php artisan storage:link --force 2>/dev/null || true
+
+# ── Clear caches (only after migrations — never before) ───────
+echo "==> Clearing caches..."
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+php artisan cache:clear
+php artisan config:cache
 
 # ── Assets check ─────────────────────────────────────────────
 ls -la /app/public/build/assets/ 2>/dev/null || echo "WARNING: public/build/assets not found"
