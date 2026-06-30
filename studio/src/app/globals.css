@@ -563,67 +563,26 @@
 
   .sign-in-page {
     min-height: 100vh;
-    background: hsl(var(--cream));
-    color: hsl(var(--ink));
-  }
-
-  .sign-in-masthead {
-    border-bottom: 1px solid hsl(var(--border));
-    padding: 1.5rem 1rem 1.25rem;
-  }
-
-  .sign-in-masthead-inner {
-    max-width: var(--container-max);
-    margin-inline: auto;
-  }
-
-  .sign-in-meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    font-size: 0.625rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: hsl(var(--ink-muted));
-    margin-bottom: 1rem;
-  }
-
-  .sign-in-meta-accent {
-    color: hsl(var(--brand));
-    font-weight: 700;
-  }
-
-  .sign-in-brand-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    gap: 1rem 2rem;
-  }
-
-  .sign-in-brand-link {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .sign-in-logo {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-  }
-
-  .sign-in-tagline {
-    font-family: var(--font-headline, serif);
-    font-size: 0.875rem;
-    color: hsl(var(--ink-muted));
-    max-width: 28rem;
-    margin: 0;
+    flex-direction: column;
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
 
   .sign-in-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
     max-width: 28rem;
-    margin: 0 auto;
-    padding: 2.5rem 1rem 3rem;
+    margin-inline: auto;
+    padding: 2rem 1rem 3rem;
   }
 
   .sign-in-card {
+    width: 100%;
     background: white;
     border: 1px solid hsl(var(--border));
     border-radius: var(--radius);

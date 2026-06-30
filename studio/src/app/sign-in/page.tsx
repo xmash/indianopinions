@@ -3,8 +3,7 @@
 import Link from 'next/link';
 import {FormEvent, useEffect, useState} from 'react';
 
-import {SiteLogo} from '@/components/layout/SiteLogo';
-import {site} from '@/config/site';
+import {EditorialMasthead} from '@/components/layout/EditorialMasthead';
 
 export default function SignInPage() {
   const [csrf, setCsrf] = useState('');
@@ -68,21 +67,7 @@ export default function SignInPage() {
 
   return (
     <div className="sign-in-page">
-      <header className="sign-in-masthead">
-        <div className="sign-in-masthead-inner">
-          <p className="sign-in-meta">
-            <span>{site.mastheadLine}</span>
-            <span className="sign-in-meta-accent">{site.mastheadTagline}</span>
-            <span>{site.editions}</span>
-          </p>
-          <div className="sign-in-brand-row">
-            <Link href="/" className="sign-in-brand-link">
-              <SiteLogo className="sign-in-logo" />
-            </Link>
-            <p className="sign-in-tagline">{site.tagline}</p>
-          </div>
-        </div>
-      </header>
+      <EditorialMasthead />
 
       <main className="sign-in-main">
         <div className="sign-in-card">
