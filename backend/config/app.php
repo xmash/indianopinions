@@ -56,6 +56,8 @@ return [
 
     'url' => AppUrl::publicUrl(env('APP_URL'), env('APP_ALLOWED_HOSTS')),
 
+    'allowed_hosts' => AppUrl::allAllowedHosts(env('APP_URL'), env('APP_ALLOWED_HOSTS')),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

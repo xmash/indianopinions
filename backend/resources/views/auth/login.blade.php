@@ -40,7 +40,7 @@
                             <div class="alert alert-error admin-login-alert">{{ $errors->first() }}</div>
                         @endif
 
-                        <form method="POST" action="{{ route('login') }}" class="admin-login-form">
+                        <form method="POST" action="/admin/login" class="admin-login-form">
                             @csrf
                             <div>
                                 <label class="field-label" for="login">Email or username</label>
