@@ -14,7 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
-        $middleware->redirectGuestsTo('/sign-in');
+        $middleware->statefulApi();
+        $middleware->redirectGuestsTo(function () {
+            return app()->environment('local') ? '/admin/login' : '/sign-in';
+        });
         $middleware->alias([
             'role' => \App\Http\Middleware\EnsureRole::class,
             'permission' => \App\Http\Middleware\EnsurePermission::class,

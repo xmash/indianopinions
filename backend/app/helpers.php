@@ -24,6 +24,18 @@ function admin_home(): string
     return admin_route('admin.dashboard');
 }
 
+/** Full URL for post-login redirect (admin subdomain in production). */
+function admin_url(): string
+{
+    $configured = config('app.admin_url');
+
+    if (is_string($configured) && $configured !== '') {
+        return rtrim($configured, '/');
+    }
+
+    return rtrim((string) config('app.url'), '/').admin_home();
+}
+
 /**
  * Redirect to the public-site staff sign-in (Next.js).
  */

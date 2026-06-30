@@ -7,13 +7,25 @@
   NODE_VERSION = "20"
   API_URL = "https://indianopinions-indianopinions.up.railway.app"
   NEXT_PUBLIC_API_URL = "https://indianopinions-indianopinions.up.railway.app"
-  NEXT_PUBLIC_ADMIN_URL = "https://indianopinions.com/sign-in"
+  NEXT_PUBLIC_ADMIN_URL = "https://indianopinions.com/admin"
 
 # Proxy Laravel admin + assets through the public domain (sign-in is served by Next.js)
 [[redirects]]
   from = "/admin/login"
   to = "/sign-in"
   status = 302
+
+[[redirects]]
+  from = "/sanctum/*"
+  to = "https://indianopinions-indianopinions.up.railway.app/sanctum/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/login"
+  to = "https://indianopinions-indianopinions.up.railway.app/api/login"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/login"

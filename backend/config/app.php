@@ -129,4 +129,15 @@ return [
 
     'frontend_url' => AppUrl::normalize(env('FRONTEND_URL', env('APP_URL')), env('APP_ALLOWED_HOSTS')),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin URL (post-login redirect for SPA / Sanctum)
+    |--------------------------------------------------------------------------
+    |
+    | Full URL to the Laravel admin dashboard, e.g. https://admin.indianopinions.com
+    |
+    */
+
+    'admin_url' => env('ADMIN_URL'),
+
 ];

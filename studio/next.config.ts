@@ -20,6 +20,8 @@ const nextConfig: NextConfig = {
       {source: '/admin', destination: `${backendUrl}/admin`},
       {source: '/admin/:path*', destination: `${backendUrl}/admin/:path*`},
       {source: '/build/:path*', destination: `${backendUrl}/build/:path*`},
+      {source: '/sanctum/:path*', destination: `${backendUrl}/sanctum/:path*`},
+      {source: '/api/login', destination: `${backendUrl}/api/login`},
       {source: '/login', destination: `${backendUrl}/login`},
       {source: '/logout', destination: `${backendUrl}/logout`},
       {source: '/storage/:path*', destination: `${backendUrl}/storage/:path*`},

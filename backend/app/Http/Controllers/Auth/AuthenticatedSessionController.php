@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Concerns\ResolvesStaffLogin;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthenticatedSessionController extends Controller
 {
+    use ResolvesStaffLogin;
     public function create()
     {
         return view('auth.login');
@@ -22,7 +23,7 @@ class AuthenticatedSessionController extends Controller
             'password' => 'required',
         ]);
 
-        $user = $this->resolveUser($validated['login']);
+        $user = $this->resolveStaffUser($validated['login']);
 
         if (! $user || ! Hash::check($validated['password'], $user->password)) {
             return back()
@@ -39,23 +40,7 @@ class AuthenticatedSessionController extends Controller
         Auth::login($user, $request->boolean('remember'));
         $request->session()->regenerate();
 
-        return redirect()->intended(admin_home());
-    }
-
-    private function resolveUser(string $login): ?User
-    {
-        $login = trim($login);
-
-        if (filter_var($login, FILTER_VALIDATE_EMAIL)) {
-            return User::where('email', $login)->first();
-        }
-
-        $needle = strtolower($login);
-
-        return User::query()
-            ->whereRaw('LOWER(name) = ?', [$needle])
-            ->orWhereRaw('LOWER(email) LIKE ?', [$needle.'@%'])
-            ->first();
+        return redirect(admin_home());
     }
 
     public function destroy(Request $request)
