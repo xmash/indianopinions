@@ -3,16 +3,22 @@ set -e
 
 cd /app
 
-echo "==> Indian Opinions boot (/start.sh)"
+echo "==> Indian Opinions boot (/entrypoint.sh)"
 
-# Railway sets RAILWAY_PUBLIC_DOMAIN; use it when APP_URL is not configured.
-# Set APP_URL (or PUBLIC_APP_URL) to https://indianopinions.com when admin is proxied via Netlify.
-if [ -n "$PUBLIC_APP_URL" ]; then
-    export APP_URL="$PUBLIC_APP_URL"
-    echo "==> APP_URL set from PUBLIC_APP_URL: ${APP_URL}"
-elif [ -n "$RAILWAY_PUBLIC_DOMAIN" ] && [ -z "$APP_URL" ]; then
+# Railway sets RAILWAY_PUBLIC_DOMAIN when APP_URL is not set.
+if [ -n "$RAILWAY_PUBLIC_DOMAIN" ] && [ -z "$APP_URL" ]; then
     export APP_URL="https://${RAILWAY_PUBLIC_DOMAIN}"
     echo "==> APP_URL set from Railway: ${APP_URL}"
+fi
+
+if printf '%s' "${APP_URL:-}" | grep -qE '\$\{\{|\$\{'; then
+    echo "ERROR: APP_URL looks like an unexpanded Railway template: ${APP_URL}"
+    echo "  Set APP_URL to a literal URL, e.g. https://indianopinions.com"
+    exit 1
+fi
+
+if [ -n "${APP_URL:-}" ]; then
+    echo "==> APP_URL: ${APP_URL}"
 fi
 
 # Laravel reads DB_URL; Railway injects DATABASE_URL.
@@ -61,7 +67,7 @@ until php docker/wait-for-postgres.php 2>/tmp/pg_error; do
 done
 echo "  PostgreSQL is ready."
 
-# ── Migrations + seed (must run before any database cache/session use) ──
+# ── Migrations (must run before any database cache/session use) ──
 echo "==> Running migrations..."
 php artisan migrate --force
 

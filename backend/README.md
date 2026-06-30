@@ -71,11 +71,43 @@ Editors curate slots at **Admin → Homepage** and **Admin → Hub Pages**. Empt
 
 ## Deployment (Railway)
 
-1. Create a Railway project with PostgreSQL + web service from this `backend/` directory.
-2. Set `APP_KEY` (`php artisan key:generate --show`).
-3. Link Postgres — Railway injects `DATABASE_URL`.
-4. Set `FRONTEND_URL` to your Netlify site URL for CORS.
-5. Deploy — Docker runs migrations and seeds categories on boot.
+1. Create a Railway project with PostgreSQL + web service.
+2. **Settings → Source**
+   - **Root Directory** = `backend`
+   - **Config file path** = `/backend/railway.toml`
+   - **Watch Paths** — empty (do not use `backend/**`; omitted from `railway.toml`)
+   - **Start Command** — `/entrypoint.sh` (set in `railway.toml` + Dockerfile `CMD`)
+   - **Healthcheck timeout** — `300` (set in `railway.toml`)
+3. Set variables:
+
+```env
+APP_KEY=                    # php artisan key:generate --show
+APP_URL=https://indianopinions.com,https://indianopinions-indianopinions.up.railway.app
+```
+
+`FRONTEND_URL` is optional — defaults to the first URL in `APP_URL` (CORS + “back to site” links).  
+`APP_ALLOWED_HOSTS` is optional — extra hostnames if needed.
+
+5. Link Postgres — Railway injects `DATABASE_URL`.
+
+### Deploy vs Redeploy (important)
+
+| Action | Pulls latest Git? | Rebuilds Docker? |
+|--------|-------------------|------------------|
+| **Push to `main`** | Yes | Yes (if backend files changed) |
+| **Deploy → latest commit** | Yes | Yes |
+| **Redeploy** | **No** | **No** — restarts old image |
+| **Sync** (repo reconnect) | Maybe | Only if a new build is triggered |
+
+**Redeploy never pulls new code.** If the old image fails boot, Redeploy will fail again.
+
+To ship new code: push to `main`, or **Deployments → Deploy** the latest commit, optionally **Clear build cache** first.
+
+If pushes do not trigger builds: confirm Root Directory is `backend`, clear any **Watch Paths** saved in the UI (or temporarily remove Config file path to unlock the field), and reconnect GitHub if webhooks are stale.
+
+**UI fields greyed out?** Railway is using `backend/railway.toml`. Change settings in that file and push — do not fight the dashboard. To edit in the UI only: remove Config file path, change settings, redeploy (not recommended long-term).
+
+See also: [`docs/RAILWAY-LARAVEL-DEPLOY.md`](../docs/RAILWAY-LARAVEL-DEPLOY.md) for `Host is malformed` and Redis issues.
 
 ## Next.js integration
 

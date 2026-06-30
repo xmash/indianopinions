@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Wait-for-postgres probe for docker/start.sh.
+ * Wait-for-postgres probe for docker/entrypoint.sh.
  * Railway DATABASE_URL uses postgresql:// — PDO requires pgsql:host=...;port=...;dbname=...
  */
 

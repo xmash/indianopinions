@@ -1,5 +1,7 @@
 <?php
 
+use App\Support\AppUrl;
+
 return [
 
     /*
@@ -52,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => AppUrl::normalize(env('APP_URL'), env('APP_ALLOWED_HOSTS')),
 
     /*
     |--------------------------------------------------------------------------
@@ -123,6 +125,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'frontend_url' => env('FRONTEND_URL'),
+    'frontend_url' => AppUrl::normalize(env('FRONTEND_URL', env('APP_URL')), env('APP_ALLOWED_HOSTS')),
 
 ];

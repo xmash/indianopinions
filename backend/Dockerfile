@@ -55,9 +55,9 @@ RUN mkdir -p storage/framework/{sessions,views,cache} storage/logs bootstrap/cac
 # ── Config & start scripts (copy last — invalidates cache when boot script changes) ──
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/wait-for-postgres.php docker/wait-for-postgres.php
-COPY docker/start.sh /start.sh
-RUN chmod +x /start.sh
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 8080
 
-CMD ["/start.sh"]
+CMD ["/entrypoint.sh"]
