@@ -4,6 +4,7 @@ import {
   extractCsrfToken,
   forwardSetCookies,
   isAuthSuccessRedirect,
+  normalizeLoginRedirect,
   toPublicRedirectPath,
 } from '@/lib/auth-proxy';
 import {getApiUrl} from '@/lib/api-url';
@@ -56,7 +57,7 @@ export async function POST(request: Request) {
     const redirectPath = toPublicRedirectPath(location);
 
     if (redirectPath && isAuthSuccessRedirect(location)) {
-      const json = NextResponse.json({redirect: redirectPath});
+      const json = NextResponse.json({redirect: normalizeLoginRedirect(redirectPath)});
       forwardSetCookies(json, setCookies);
 
       return json;

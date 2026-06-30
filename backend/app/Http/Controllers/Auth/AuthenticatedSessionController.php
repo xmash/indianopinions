@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
         Auth::login($user, $request->boolean('remember'));
         $request->session()->regenerate();
 
-        return redirect()->intended(admin_route('admin.posts.index'));
+        return redirect()->intended(admin_home());
     }
 
     private function resolveUser(string $login): ?User

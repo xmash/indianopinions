@@ -18,6 +18,12 @@ function admin_redirect(string $name, mixed $parameters = []): \Illuminate\Http\
     return redirect()->to(admin_route($name, $parameters));
 }
 
+/** Default admin landing: dashboard at /admin */
+function admin_home(): string
+{
+    return admin_route('admin.dashboard');
+}
+
 /**
  * Redirect to the public-site staff sign-in (Next.js).
  */

@@ -2,6 +2,9 @@ import {NextResponse} from 'next/server';
 
 import {getApiUrl} from '@/lib/api-url';
 
+/** Default post-login destination — Laravel dashboard at /admin */
+export const ADMIN_HOME_PATH = '/admin';
+
 export function stripCookieDomain(setCookie: string): string {
   return setCookie.replace(/;\s*Domain=[^;]*/gi, '');
 }
@@ -62,9 +65,23 @@ export function toPublicRedirectPath(location: string): string | null {
   return location.startsWith('/') ? location : `/${location}`;
 }
 
+/** After sign-in, always land on the dashboard unless Laravel sent another admin path. */
+export function normalizeLoginRedirect(path: string | null): string {
+  if (!path) {
+    return ADMIN_HOME_PATH;
+  }
+
+  // Legacy backend defaulted to the articles list
+  if (path === '/admin/posts') {
+    return ADMIN_HOME_PATH;
+  }
+
+  return path;
+}
+
 /** @deprecated Use toPublicRedirectPath */
 export function toPublicPath(location: string, requestUrl: string): string {
-  return toPublicRedirectPath(location) ?? new URL('/admin/posts', requestUrl).pathname;
+  return normalizeLoginRedirect(toPublicRedirectPath(location)) ?? ADMIN_HOME_PATH;
 }
 
 export function getApiOrigin(): string {
