@@ -1,6 +1,4 @@
-# Proxy Laravel admin + assets (200! = rewrite, URL stays on indianopinions.com)
-/admin https://indianopinions-indianopinions.up.railway.app/admin 200!
-/admin/* https://indianopinions-indianopinions.up.railway.app/admin/:splat 200!
+# Laravel assets + auth endpoints (admin UI proxied via next.config rewrites)
 /login https://indianopinions-indianopinions.up.railway.app/login 200!
 /logout https://indianopinions-indianopinions.up.railway.app/logout 200!
 /build/* https://indianopinions-indianopinions.up.railway.app/build/:splat 200!

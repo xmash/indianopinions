@@ -27,7 +27,7 @@ export function SiteFooter() {
                 {link.label}
               </Link>
             ))}
-            <Link href="/admin/login" className="site-footer-link">
+            <Link href="/sign-in" className="site-footer-link">
               Login
             </Link>
           </div>

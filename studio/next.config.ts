@@ -5,32 +5,15 @@ const backendUrl =
   process.env.NEXT_PUBLIC_API_URL ??
   'http://localhost:8000';
 
-const adminLoginUrl =
-  process.env.NEXT_PUBLIC_ADMIN_URL ?? 'http://localhost:8000/admin/login';
-
-/** Local dev only — production proxies /admin/* to Railway via rewrites below. */
-function adminLoginRedirect() {
-  try {
-    const target = new URL(adminLoginUrl);
-    if (target.hostname !== 'localhost') {
-      return [];
-    }
-  } catch {
-    return [];
-  }
-
-  return [
-    {
-      source: '/admin/login',
-      destination: adminLoginUrl,
-      permanent: false,
-    },
-  ];
-}
-
 const nextConfig: NextConfig = {
   async redirects() {
-    return adminLoginRedirect();
+    return [
+      {
+        source: '/admin/login',
+        destination: '/sign-in',
+        permanent: false,
+      },
+    ];
   },
   async rewrites() {
     return [

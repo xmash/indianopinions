@@ -10,6 +10,5 @@ export const site = {
   url: 'https://indianopinions.com',
   privacyEmail: 'privacy@indianopinions.com',
   footerLegal: '© 2026 Indian Opinions',
-  adminLoginUrl:
-    process.env.NEXT_PUBLIC_ADMIN_URL ?? 'https://indianopinions.com/admin/login',
+  adminLoginUrl: process.env.NEXT_PUBLIC_ADMIN_URL ?? 'https://indianopinions.com/sign-in',
 } as const;
