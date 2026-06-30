@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
         Auth::login($user, $request->boolean('remember'));
         $request->session()->regenerate();
 
-        return redirect()->intended(route('admin.posts.index'));
+        return redirect()->intended(admin_route('admin.posts.index'));
     }
 
     private function resolveUser(string $login): ?User
@@ -63,6 +63,6 @@ class AuthenticatedSessionController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect(config('app.frontend_url', '/'));
     }
 }

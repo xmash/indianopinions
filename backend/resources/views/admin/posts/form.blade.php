@@ -10,9 +10,9 @@
     @endif
     <x-slot:actions>
         @isset($post)
-            <a href="{{ route('admin.posts.show', $post) }}" class="btn btn-outline">View</a>
+            <a href="{{ admin_route('admin.posts.show', $post) }}" class="btn btn-outline">View</a>
         @endisset
-        <a href="{{ route('admin.posts.index') }}" class="btn btn-outline">Back to list</a>
+        <a href="{{ admin_route('admin.posts.index') }}" class="btn btn-outline">Back to list</a>
     </x-slot:actions>
 </x-admin.page-header>
 
@@ -36,7 +36,7 @@
 
 <div class="form-grid-2">
     <div class="card">
-        <form id="article-form" method="POST" action="{{ isset($post) ? route('admin.posts.update', $post) : route('admin.posts.store') }}">
+        <form id="article-form" method="POST" action="{{ isset($post) ? admin_route('admin.posts.update', $post) : admin_route('admin.posts.store') }}">
             @csrf
             @if(isset($post)) @method('PUT') @endif
             <fieldset @disabled($lockedForWriter) style="border: none; margin: 0; padding: 0;">
@@ -134,7 +134,7 @@
                     </div>
 
                     @can('submit', $post)
-                        <form method="POST" action="{{ route('admin.posts.submit', $post) }}">
+                        <form method="POST" action="{{ admin_route('admin.posts.submit', $post) }}">
                             @csrf
                             <label class="field-label">Note to editors (optional)</label>
                             <textarea name="submission_notes" rows="2" class="textarea" style="min-height:60px;">{{ old('submission_notes', $post->submission_notes) }}</textarea>
@@ -143,7 +143,7 @@
                     @endcan
 
                     @if(auth()->user()->isEditor() && !empty($allowedTransitions))
-                        <form method="POST" action="{{ route('admin.posts.transition', $post) }}">
+                        <form method="POST" action="{{ admin_route('admin.posts.transition', $post) }}">
                             @csrf
                             <label class="field-label">Change status (editor only)</label>
                             <select name="status" class="input" required>

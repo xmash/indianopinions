@@ -131,7 +131,7 @@ class PostController extends Controller
         $this->syncRelations($post, $request);
         $this->workflow->logCreated($post, $user);
 
-        return redirect()->route('admin.posts.show', $post)->with('success', 'Article saved as draft.');
+        return admin_redirect('admin.posts.show', $post)->with('success', 'Article saved as draft.');
     }
 
     public function show(Post $post)
@@ -169,14 +169,14 @@ class PostController extends Controller
         $post->update($data);
         $this->syncRelations($post, $request);
 
-        return redirect()->route('admin.posts.show', $post)->with('success', 'Article updated.');
+        return admin_redirect('admin.posts.show', $post)->with('success', 'Article updated.');
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
 
-        return redirect()->route('admin.posts.index')->with('success', 'Article deleted.');
+        return admin_redirect('admin.posts.index')->with('success', 'Article deleted.');
     }
 
     public function submit(Request $request, Post $post)

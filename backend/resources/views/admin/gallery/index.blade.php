@@ -74,7 +74,7 @@
 <div class="flex items-center justify-between mb-5">
     <div class="flex items-center gap-3">
         @if($categories->isNotEmpty())
-            <form method="GET" action="{{ route('admin.gallery.index') }}">
+            <form method="GET" action="{{ admin_route('admin.gallery.index') }}">
                 <select name="category" onchange="this.form.submit()"
                         class="text-sm border border-zinc-200 rounded-lg px-3 py-1.5 text-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     <option value="">All categories</option>
@@ -86,7 +86,7 @@
         @endif
         <span class="text-xs text-zinc-400">{{ $images->total() }} image{{ $images->total() !== 1 ? 's' : '' }}</span>
     </div>
-    <a href="{{ route('admin.gallery.create') }}"
+    <a href="{{ admin_route('admin.gallery.create') }}"
        class="px-4 py-2 border border-zinc-300 hover:bg-zinc-50 text-zinc-700 text-sm font-medium rounded-lg transition">
         + Add by URL
     </a>
@@ -117,11 +117,11 @@
                             <p class="text-white/60 text-xs truncate mb-2">{{ $image->category }}</p>
                         @endif
                         <div class="flex gap-1.5">
-                            <a href="{{ route('admin.gallery.edit', $image) }}"
+                            <a href="{{ admin_route('admin.gallery.edit', $image) }}"
                                class="flex-1 py-1 text-center text-xs bg-white/20 hover:bg-white/35 text-white rounded-lg transition">
                                 Edit
                             </a>
-                            <form method="POST" action="{{ route('admin.gallery.destroy', $image) }}"
+                            <form method="POST" action="{{ admin_route('admin.gallery.destroy', $image) }}"
                                   onsubmit="return confirm('Delete this image?')">
                                 @csrf @method('DELETE')
                                 <button class="px-2.5 py-1 text-xs bg-red-500/70 hover:bg-red-500 text-white rounded-lg transition">✕</button>
@@ -194,7 +194,7 @@ function galleryUploader() {
                                 ?? '{{ csrf_token() }}');
 
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', '{{ route('admin.gallery.upload') }}');
+            xhr.open('POST', '{{ admin_route('admin.gallery.upload') }}');
 
             xhr.upload.onprogress = e => {
                 if (e.lengthComputable) item.progress = Math.round(e.loaded / e.total * 95);

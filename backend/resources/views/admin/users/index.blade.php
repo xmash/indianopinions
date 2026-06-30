@@ -4,7 +4,7 @@
 @section('content')
 <x-admin.page-header title="Staff" subtitle="Editors and writers">
     <x-slot:actions>
-        <a href="{{ route('admin.users.create') }}" class="btn btn-primary">+ Add Staff</a>
+        <a href="{{ admin_route('admin.users.create') }}" class="btn btn-primary">+ Add Staff</a>
     </x-slot:actions>
 </x-admin.page-header>
 
@@ -27,9 +27,9 @@
                     <td><span class="badge badge-primary">{{ $user->roleLabel() }}</span></td>
                     <td><span class="badge {{ $user->is_active ? 'badge-success' : 'badge-danger' }}">{{ $user->is_active ? 'Active' : 'Inactive' }}</span></td>
                     <td>
-                        <a href="{{ route('admin.users.edit', $user) }}" class="link">Edit</a>
+                        <a href="{{ admin_route('admin.users.edit', $user) }}" class="link">Edit</a>
                         @if($user->id !== auth()->id())
-                            <form method="POST" action="{{ route('admin.users.destroy', $user) }}" style="display:inline" onsubmit="return confirm('Remove this staff member?')">
+                            <form method="POST" action="{{ admin_route('admin.users.destroy', $user) }}" style="display:inline" onsubmit="return confirm('Remove this staff member?')">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="btn btn-ghost btn-sm" style="color: var(--danger);">Remove</button>
                             </form>

@@ -45,7 +45,7 @@ class GalleryController extends Controller
                 'id'       => $image->id,
                 'url'      => $image->image_url,
                 'title'    => $image->title,
-                'edit_url' => route('admin.gallery.edit', $image),
+                'edit_url' => admin_route('admin.gallery.edit', $image),
             ];
         }
 
@@ -61,7 +61,7 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         GalleryImage::create($this->validated($request));
-        return redirect()->route('admin.gallery.index')->with('success', 'Image added.');
+        return admin_redirect('admin.gallery.index')->with('success', 'Image added.');
     }
 
     public function edit(GalleryImage $gallery)
@@ -73,7 +73,7 @@ class GalleryController extends Controller
     public function update(Request $request, GalleryImage $gallery)
     {
         $gallery->update($this->validated($request, $gallery));
-        return redirect()->route('admin.gallery.index')->with('success', 'Image updated.');
+        return admin_redirect('admin.gallery.index')->with('success', 'Image updated.');
     }
 
     public function destroy(GalleryImage $gallery)
@@ -86,7 +86,7 @@ class GalleryController extends Controller
         }
 
         $gallery->delete();
-        return redirect()->route('admin.gallery.index')->with('success', 'Image deleted.');
+        return admin_redirect('admin.gallery.index')->with('success', 'Image deleted.');
     }
 
     private function validated(Request $request, ?GalleryImage $image = null): array

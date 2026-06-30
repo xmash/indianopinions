@@ -10,9 +10,9 @@
         @endif
     </x-slot:meta>
     <x-slot:actions>
-        <a href="{{ route('admin.posts.index') }}" class="btn btn-outline">Back to list</a>
+        <a href="{{ admin_route('admin.posts.index') }}" class="btn btn-outline">Back to list</a>
         @can('update', $post)
-            <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-primary">Edit</a>
+            <a href="{{ admin_route('admin.posts.edit', $post) }}" class="btn btn-primary">Edit</a>
         @endcan
     </x-slot:actions>
 </x-admin.page-header>
@@ -102,7 +102,7 @@
         @can('update', $post)
             <div class="card">
                 <div class="card-body">
-                    <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-primary btn-block">Edit article</a>
+                    <a href="{{ admin_route('admin.posts.edit', $post) }}" class="btn btn-primary btn-block">Edit article</a>
                 </div>
             </div>
         @endcan

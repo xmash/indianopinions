@@ -4,11 +4,11 @@
 @section('content')
 <x-admin.page-header :title="isset($gallery) ? 'Edit Image' : 'Add Image'">
     <x-slot:actions>
-        <a href="{{ route('admin.gallery.index') }}" class="btn btn-outline">Back</a>
+        <a href="{{ admin_route('admin.gallery.index') }}" class="btn btn-outline">Back</a>
     </x-slot:actions>
 </x-admin.page-header>
 
-<form method="POST" action="{{ isset($gallery) ? route('admin.gallery.update', $gallery) : route('admin.gallery.store') }}" class="max-w-2xl">
+<form method="POST" action="{{ isset($gallery) ? admin_route('admin.gallery.update', $gallery) : admin_route('admin.gallery.store') }}" class="max-w-2xl">
     @csrf
     @if(isset($gallery)) @method('PUT') @endif
 
@@ -73,7 +73,7 @@
             <button type="submit" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg text-sm transition">
                 {{ isset($gallery) ? 'Update Image' : 'Add Image' }}
             </button>
-            <a href="{{ route('admin.gallery.index') }}" class="px-4 py-2 border border-zinc-300 text-zinc-600 hover:bg-zinc-50 rounded-lg text-sm transition">Cancel</a>
+            <a href="{{ admin_route('admin.gallery.index') }}" class="px-4 py-2 border border-zinc-300 text-zinc-600 hover:bg-zinc-50 rounded-lg text-sm transition">Cancel</a>
         </div>
 
     </div>

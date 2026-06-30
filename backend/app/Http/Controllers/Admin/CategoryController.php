@@ -23,7 +23,7 @@ class CategoryController extends Controller
     {
         $request->validate(['name' => 'required|string|max:100', 'description' => 'nullable|string', 'color' => 'nullable|string|max:7']);
         Category::create($request->only('name', 'description', 'color'));
-        return redirect()->route('admin.categories.index')->with('success', 'Category created.');
+        return admin_redirect('admin.categories.index')->with('success', 'Category created.');
     }
 
     public function edit(Category $category)
@@ -35,12 +35,12 @@ class CategoryController extends Controller
     {
         $request->validate(['name' => 'required|string|max:100', 'description' => 'nullable|string', 'color' => 'nullable|string|max:7']);
         $category->update($request->only('name', 'description', 'color'));
-        return redirect()->route('admin.categories.index')->with('success', 'Category updated.');
+        return admin_redirect('admin.categories.index')->with('success', 'Category updated.');
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('admin.categories.index')->with('success', 'Category deleted.');
+        return admin_redirect('admin.categories.index')->with('success', 'Category deleted.');
     }
 }

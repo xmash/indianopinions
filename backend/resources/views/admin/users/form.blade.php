@@ -4,13 +4,13 @@
 @section('content')
 <x-admin.page-header :title="isset($user) ? 'Edit Staff Member' : 'Add Staff Member'">
     <x-slot:actions>
-        <a href="{{ route('admin.users.index') }}" class="btn btn-outline">Back</a>
+        <a href="{{ admin_route('admin.users.index') }}" class="btn btn-outline">Back</a>
     </x-slot:actions>
 </x-admin.page-header>
 
 <div class="card" style="max-width: 560px;">
     <div class="card-body">
-        <form method="POST" action="{{ isset($user) ? route('admin.users.update', $user) : route('admin.users.store') }}" style="display: grid; gap: 16px;">
+        <form method="POST" action="{{ isset($user) ? admin_route('admin.users.update', $user) : admin_route('admin.users.store') }}" style="display: grid; gap: 16px;">
             @csrf
             @if(isset($user)) @method('PUT') @endif
 

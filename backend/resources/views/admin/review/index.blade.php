@@ -23,7 +23,7 @@
                 @foreach($posts as $post)
                     <tr>
                         <td>
-                            <a href="{{ route('admin.posts.show', $post) }}" class="link">{{ $post->title }}</a>
+                            <a href="{{ admin_route('admin.posts.show', $post) }}" class="link">{{ $post->title }}</a>
                             @if($post->submission_notes)
                                 <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0;">{{ Str::limit($post->submission_notes, 80) }}</p>
                             @endif
@@ -34,12 +34,12 @@
                         <td>{{ $post->updated_at->diffForHumans() }}</td>
                         <td style="white-space: nowrap;">
                             @if($post->status === 'submitted')
-                                <form method="POST" action="{{ route('admin.review.start', $post) }}" style="display:inline">
+                                <form method="POST" action="{{ admin_route('admin.review.start', $post) }}" style="display:inline">
                                     @csrf
                                     <button class="btn btn-outline btn-sm">Start Review</button>
                                 </form>
                             @endif
-                            <form method="POST" action="{{ route('admin.review.publish', $post) }}" style="display:inline">
+                            <form method="POST" action="{{ admin_route('admin.review.publish', $post) }}" style="display:inline">
                                 @csrf
                                 <button class="btn btn-primary btn-sm">Publish</button>
                             </form>
@@ -48,7 +48,7 @@
                     <tr>
                         <td colspan="6" style="background: var(--surface);">
                             <div style="display: grid; gap: 12px; padding: 8px 0;">
-                                <form method="POST" action="{{ route('admin.review.changes', $post) }}" style="display:flex; gap:8px; align-items:flex-end;">
+                                <form method="POST" action="{{ admin_route('admin.review.changes', $post) }}" style="display:flex; gap:8px; align-items:flex-end;">
                                     @csrf
                                     <div style="flex:1">
                                         <label class="field-label">Request changes (required note)</label>
@@ -56,7 +56,7 @@
                                     </div>
                                     <button type="submit" class="btn btn-outline btn-sm">Request Changes</button>
                                 </form>
-                                <form method="POST" action="{{ route('admin.review.reject', $post) }}" style="display:flex; gap:8px; align-items:flex-end;">
+                                <form method="POST" action="{{ admin_route('admin.review.reject', $post) }}" style="display:flex; gap:8px; align-items:flex-end;">
                                     @csrf
                                     <div style="flex:1">
                                         <label class="field-label">Reject (required reason)</label>

@@ -41,7 +41,7 @@ class UserController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Staff member created.');
+        return admin_redirect('admin.users.index')->with('success', 'Staff member created.');
     }
 
     public function edit(User $user)
@@ -64,7 +64,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.users.index')->with('success', 'Staff member updated.');
+        return admin_redirect('admin.users.index')->with('success', 'Staff member updated.');
     }
 
     public function destroy(User $user)
@@ -75,7 +75,7 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect()->route('admin.users.index')->with('success', 'Staff member removed.');
+        return admin_redirect('admin.users.index')->with('success', 'Staff member removed.');
     }
 
     private function validateUser(Request $request, ?User $user = null): array

@@ -4,12 +4,12 @@
 @section('content')
 <x-admin.page-header :title="isset($category) ? 'Edit Category' : 'New Category'">
     <x-slot:actions>
-        <a href="{{ route('admin.categories.index') }}" class="btn btn-outline">Back</a>
+        <a href="{{ admin_route('admin.categories.index') }}" class="btn btn-outline">Back</a>
     </x-slot:actions>
 </x-admin.page-header>
 
 <div class="max-w-lg">
-    <form method="POST" action="{{ isset($category) ? route('admin.categories.update', $category) : route('admin.categories.store') }}" class="bg-white rounded-xl border border-zinc-200 p-6 space-y-5">
+    <form method="POST" action="{{ isset($category) ? admin_route('admin.categories.update', $category) : admin_route('admin.categories.store') }}" class="bg-white rounded-xl border border-zinc-200 p-6 space-y-5">
         @csrf
         @if(isset($category)) @method('PUT') @endif
 
@@ -39,7 +39,7 @@
             <button type="submit" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg text-sm transition">
                 {{ isset($category) ? 'Update' : 'Create' }}
             </button>
-            <a href="{{ route('admin.categories.index') }}" class="px-4 py-2 border border-zinc-300 text-zinc-600 hover:bg-zinc-50 rounded-lg text-sm transition">Cancel</a>
+            <a href="{{ admin_route('admin.categories.index') }}" class="px-4 py-2 border border-zinc-300 text-zinc-600 hover:bg-zinc-50 rounded-lg text-sm transition">Cancel</a>
         </div>
     </form>
 </div>

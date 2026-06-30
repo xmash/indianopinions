@@ -4,7 +4,7 @@
 @section('content')
 <x-admin.page-header title="Categories" subtitle="Hubs shown in site navigation">
     <x-slot:actions>
-        <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">+ New Category</a>
+        <a href="{{ admin_route('admin.categories.create') }}" class="btn btn-primary">+ New Category</a>
     </x-slot:actions>
 </x-admin.page-header>
 
@@ -30,8 +30,8 @@
                     <td class="px-6 py-4 font-mono text-zinc-400 text-xs">{{ $cat->slug }}</td>
                     <td class="px-6 py-4 text-center text-zinc-500">{{ $cat->posts_count }}</td>
                     <td class="px-6 py-4 text-right whitespace-nowrap">
-                        <a href="{{ route('admin.categories.edit', $cat) }}" class="text-indigo-600 hover:text-indigo-800 mr-3 text-xs font-medium">Edit</a>
-                        <form method="POST" action="{{ route('admin.categories.destroy', $cat) }}" class="inline" onsubmit="return confirm('Delete category?')">
+                        <a href="{{ admin_route('admin.categories.edit', $cat) }}" class="text-indigo-600 hover:text-indigo-800 mr-3 text-xs font-medium">Edit</a>
+                        <form method="POST" action="{{ admin_route('admin.categories.destroy', $cat) }}" class="inline" onsubmit="return confirm('Delete category?')">
                             @csrf @method('DELETE')
                             <button class="text-red-500 hover:text-red-700 text-xs">Delete</button>
                         </form>

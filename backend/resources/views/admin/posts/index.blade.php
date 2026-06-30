@@ -17,14 +17,14 @@
 <x-admin.page-header title="Articles" subtitle="Draft, review, and publish stories">
     <x-slot:actions>
         @can('create', App\Models\Post::class)
-            <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">+ New Article</a>
+            <a href="{{ admin_route('admin.posts.create') }}" class="btn btn-primary">+ New Article</a>
         @endcan
     </x-slot:actions>
 </x-admin.page-header>
 
 <div class="card" style="margin-bottom: 16px;">
     <div class="card-body">
-        <form method="GET" action="{{ route('admin.posts.index') }}" class="articles-search-form">
+        <form method="GET" action="{{ admin_route('admin.posts.index') }}" class="articles-search-form">
             @if($currentStatus)
                 <input type="hidden" name="status" value="{{ $currentStatus }}">
             @endif
@@ -52,7 +52,7 @@
                 >
                 <button type="submit" class="btn btn-primary">Search</button>
                 @if($currentSearch)
-                    <a href="{{ route('admin.posts.index', array_merge($listParams, $currentStatus ? ['status' => $currentStatus] : [])) }}" class="btn btn-outline">Clear</a>
+                    <a href="{{ admin_route('admin.posts.index', array_merge($listParams, $currentStatus ? ['status' => $currentStatus] : [])) }}" class="btn btn-outline">Clear</a>
                 @endif
             </div>
         </form>
@@ -61,7 +61,7 @@
 
 <div class="card" style="margin-bottom: 16px;">
     <div class="card-body page-toolbar">
-        <a href="{{ route('admin.posts.index', $listParams) }}" class="badge {{ !$currentStatus ? 'badge-primary' : 'badge-muted' }}">All</a>
+        <a href="{{ admin_route('admin.posts.index', $listParams) }}" class="badge {{ !$currentStatus ? 'badge-primary' : 'badge-muted' }}">All</a>
         @foreach($statuses as $status)
             @php
                 $statusParams = $listParams;
@@ -71,7 +71,7 @@
                     unset($statusParams['status']);
                 }
             @endphp
-            <a href="{{ route('admin.posts.index', $statusParams) }}"
+            <a href="{{ admin_route('admin.posts.index', $statusParams) }}"
                class="badge {{ $currentStatus === $status->value ? 'badge-primary' : 'badge-muted' }}">
                 {{ $status->label() }}
             </a>
@@ -81,7 +81,7 @@
 
 <div class="card" style="margin-bottom: 16px;">
     <div class="card-body">
-        <form method="GET" action="{{ route('admin.posts.index') }}" class="articles-filter-form">
+        <form method="GET" action="{{ admin_route('admin.posts.index') }}" class="articles-filter-form">
             @if($currentSearch)
                 <input type="hidden" name="search" value="{{ $currentSearch }}">
             @endif
@@ -144,7 +144,7 @@
 
             <div class="articles-filter-actions">
                 <button type="submit" class="btn btn-primary">Apply filters</button>
-                <a href="{{ route('admin.posts.index') }}" class="btn btn-outline">Reset all</a>
+                <a href="{{ admin_route('admin.posts.index') }}" class="btn btn-outline">Reset all</a>
             </div>
         </form>
     </div>
@@ -167,9 +167,9 @@
             </thead>
             <tbody>
                 @foreach($posts as $post)
-                    <tr class="table-row-link" onclick="window.location='{{ route('admin.posts.show', $post) }}'" style="cursor: pointer;">
+                    <tr class="table-row-link" onclick="window.location='{{ admin_route('admin.posts.show', $post) }}'" style="cursor: pointer;">
                         <td>
-                            <a href="{{ route('admin.posts.show', $post) }}" class="link" onclick="event.stopPropagation()"><strong>{{ $post->title }}</strong></a>
+                            <a href="{{ admin_route('admin.posts.show', $post) }}" class="link" onclick="event.stopPropagation()"><strong>{{ $post->title }}</strong></a>
                             @if($post->featured && auth()->user()->isEditor())<br><span class="badge badge-warning">Featured</span>@endif
                         </td>
                         <td>{{ $post->authorUser?->name ?? $post->author }}</td>
@@ -178,10 +178,10 @@
                         <td>{{ $post->updated_at->format('M j, Y') }}</td>
                         <td style="white-space: nowrap;" onclick="event.stopPropagation()">
                             @can('update', $post)
-                                <a href="{{ route('admin.posts.edit', $post) }}" class="link">Edit</a>
+                                <a href="{{ admin_route('admin.posts.edit', $post) }}" class="link">Edit</a>
                             @endcan
                             @can('delete', $post)
-                                <form method="POST" action="{{ route('admin.posts.destroy', $post) }}" style="display:inline" onsubmit="return confirm('Delete this article?')">
+                                <form method="POST" action="{{ admin_route('admin.posts.destroy', $post) }}" style="display:inline" onsubmit="return confirm('Delete this article?')">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-ghost btn-sm" style="color: var(--danger);">Delete</button>
                                 </form>

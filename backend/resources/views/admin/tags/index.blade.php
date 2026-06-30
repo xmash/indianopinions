@@ -10,7 +10,7 @@
     <div>
         <div class="bg-white rounded-xl border border-zinc-200 p-6">
             <h2 class="text-sm font-semibold text-zinc-700 mb-4">Add New Tag</h2>
-            <form method="POST" action="{{ route('admin.tags.store') }}" class="flex gap-3">
+            <form method="POST" action="{{ admin_route('admin.tags.store') }}" class="flex gap-3">
                 @csrf
                 <input type="text" name="name" placeholder="Tag name" required class="admin-input flex-1">
                 <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition whitespace-nowrap">Add Tag</button>
@@ -35,7 +35,7 @@
                         <td class="px-5 py-3 font-medium text-zinc-800">{{ $tag->name }}</td>
                         <td class="px-5 py-3 text-center text-zinc-400">{{ $tag->posts_count }}</td>
                         <td class="px-5 py-3 text-right">
-                            <form method="POST" action="{{ route('admin.tags.destroy', $tag) }}" class="inline" onsubmit="return confirm('Delete tag?')">
+                            <form method="POST" action="{{ admin_route('admin.tags.destroy', $tag) }}" class="inline" onsubmit="return confirm('Delete tag?')">
                                 @csrf @method('DELETE')
                                 <button class="text-red-500 hover:text-red-700 text-xs">Delete</button>
                             </form>

@@ -74,8 +74,8 @@ $sections = collect($nav)->groupBy('section');
                                 $isActive = request()->route('hubSlug') === $link['active_param'];
                             }
                             $href = isset($link['route_params'])
-                                ? route($link['route'], $link['route_params'])
-                                : route($link['route']);
+                                ? admin_route($link['route'], $link['route_params'])
+                                : admin_route($link['route']);
                             $isNested = ! empty($link['nested']);
                             $indent = $isNested ? 56 : 32;
                         @endphp

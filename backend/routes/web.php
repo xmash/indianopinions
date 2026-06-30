@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/login', '/admin/login')->name('login.redirect');
 
 Route::get('/', function () {
-    return redirect()->route('admin.dashboard');
+    return admin_redirect('admin.dashboard');
 })->name('home');
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {

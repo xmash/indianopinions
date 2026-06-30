@@ -18,12 +18,12 @@ class TagController extends Controller
     {
         $request->validate(['name' => 'required|string|max:100']);
         Tag::create(['name' => $request->name]);
-        return redirect()->route('admin.tags.index')->with('success', 'Tag created.');
+        return admin_redirect('admin.tags.index')->with('success', 'Tag created.');
     }
 
     public function destroy(Tag $tag)
     {
         $tag->delete();
-        return redirect()->route('admin.tags.index')->with('success', 'Tag deleted.');
+        return admin_redirect('admin.tags.index')->with('success', 'Tag deleted.');
     }
 }

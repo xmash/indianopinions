@@ -4,7 +4,7 @@
 @section('content')
 <x-admin.page-header title="Dashboard" :subtitle="'Signed in as '.auth()->user()->roleLabel()">
     <x-slot:actions>
-        <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">+ New Article</a>
+        <a href="{{ admin_route('admin.posts.create') }}" class="btn btn-primary">+ New Article</a>
     </x-slot:actions>
 </x-admin.page-header>
 
@@ -26,7 +26,7 @@
         <div class="card">
             <div class="card-head">
                 <h2 class="card-title">Review Queue</h2>
-                <a href="{{ route('admin.review.index') }}" class="link">Open queue</a>
+                <a href="{{ admin_route('admin.review.index') }}" class="link">Open queue</a>
             </div>
             <table class="data-table">
                 <thead>
@@ -39,7 +39,7 @@
                 <tbody>
                     @foreach($reviewQueue as $post)
                         <tr>
-                            <td><a href="{{ route('admin.posts.show', $post) }}" class="link">{{ $post->title }}</a></td>
+                            <td><a href="{{ admin_route('admin.posts.show', $post) }}" class="link">{{ $post->title }}</a></td>
                             <td>{{ $post->authorUser?->name ?? $post->author }}</td>
                             <td>{{ $post->updated_at->diffForHumans() }}</td>
                         </tr>
@@ -52,10 +52,10 @@
     <div class="card">
         <div class="card-head">
             <h2 class="card-title">Recent Articles</h2>
-            <a href="{{ route('admin.posts.index') }}" class="link">View all</a>
+            <a href="{{ admin_route('admin.posts.index') }}" class="link">View all</a>
         </div>
         @if($recentPosts->isEmpty())
-            <div class="empty">No articles yet. <a href="{{ route('admin.posts.create') }}" class="link">Write the first story</a></div>
+            <div class="empty">No articles yet. <a href="{{ admin_route('admin.posts.create') }}" class="link">Write the first story</a></div>
         @else
             <table class="data-table">
                 <thead>
@@ -72,7 +72,7 @@
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->authorUser?->name ?? $post->author }}</td>
                             <td><span class="badge {{ $post->statusEnum()->badgeClass() }}">{{ $post->statusEnum()->label() }}</span></td>
-                            <td><a href="{{ route('admin.posts.show', $post) }}" class="link">View</a></td>
+                            <td><a href="{{ admin_route('admin.posts.show', $post) }}" class="link">View</a></td>
                         </tr>
                     @endforeach
                 </tbody>
