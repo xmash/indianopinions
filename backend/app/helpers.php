@@ -41,5 +41,11 @@ function admin_url(): string
  */
 function staff_sign_in_url(): string
 {
+    $frontend = config('app.frontend_url');
+
+    if (is_string($frontend) && $frontend !== '') {
+        return rtrim($frontend, '/').'/sign-in';
+    }
+
     return '/sign-in';
 }

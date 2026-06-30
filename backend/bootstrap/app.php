@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*');
         $middleware->statefulApi();
         $middleware->redirectGuestsTo(function () {
-            return app()->environment('local') ? '/admin/login' : '/sign-in';
+            return app()->environment('local') ? '/admin/login' : staff_sign_in_url();
         });
         $middleware->alias([
             'role' => \App\Http\Middleware\EnsureRole::class,
