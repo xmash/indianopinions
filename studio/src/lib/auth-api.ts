@@ -1,14 +1,5 @@
 import {getApiUrl} from '@/lib/api-url';
 
-/** Browser auth calls stay same-origin (Next/Netlify proxy → Laravel). */
-function getAuthBaseUrl(): string {
-  if (typeof window !== 'undefined') {
-    return '';
-  }
-
-  return getApiUrl();
-}
-
 let cachedXsrfToken = '';
 
 function readXsrfToken(): string {
@@ -27,7 +18,7 @@ function readXsrfToken(): string {
 }
 
 export async function prepareStaffSignIn(): Promise<void> {
-  const res = await fetch(`${getAuthBaseUrl()}/sanctum/csrf-cookie`, {
+  const res = await fetch(`${getApiUrl()}/sanctum/csrf-cookie`, {
     credentials: 'include',
   });
 
@@ -68,7 +59,7 @@ export async function submitStaffSignIn(
 
   let res: Response;
   try {
-    res = await fetch(`${getAuthBaseUrl()}/api/login`, {
+    res = await fetch(`${getApiUrl()}/api/login`, {
       method: 'POST',
       credentials: 'include',
       redirect: 'error',
