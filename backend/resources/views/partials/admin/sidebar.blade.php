@@ -43,6 +43,10 @@ if ($user->can('manage_gallery')) {
     $nav[] = ['section' => 'Organise', 'route' => 'admin.gallery.index', 'label' => 'Gallery', 'active' => 'admin.gallery.*'];
 }
 
+if ($user->can('manage_media')) {
+    $nav[] = ['section' => 'Organise', 'route' => 'admin.media-videos.index', 'label' => 'Videos', 'active' => 'admin.media-videos.*'];
+}
+
 if ($user->can('manage_staff')) {
     $nav[] = ['section' => 'Admin', 'route' => 'admin.users.index', 'label' => 'Staff', 'active' => 'admin.users.*'];
 }

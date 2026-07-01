@@ -35,6 +35,7 @@ return [
         Permission::ManageCategories->value,
         Permission::ManageTags->value,
         Permission::ManageGallery->value,
+        Permission::ManageMedia->value,
         Permission::ManageStaff->value,
         Permission::ManageLayout->value,
         Permission::ViewPermissionsMatrix->value,

@@ -49,6 +49,11 @@ export const hubs: Record<string, HubMeta> = {
     description:
       'Accessing the historical records and turning points that shaped the modern state.',
   },
+  media: {
+    title: 'Media',
+    description:
+      'Video reports, interviews, and visual journalism from Indian Opinions.',
+  },
   'intelligence-brief': {
     title: 'Intelligence Brief',
     description:

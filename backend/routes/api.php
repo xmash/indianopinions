@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BriefController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\LayoutController;
+use App\Http\Controllers\Api\MediaVideoController;
 use App\Http\Controllers\Api\NewsletterController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,6 @@ Route::get('/brief/latest', [BriefController::class, 'latest']);
 Route::get('/brief/{date}', [BriefController::class, 'show']);
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/{category:slug}', [CategoryController::class, 'show']);
+Route::get('/media/videos', [MediaVideoController::class, 'index']);
+Route::get('/media/videos/{mediaVideo}', [MediaVideoController::class, 'show']);
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe']);

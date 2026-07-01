@@ -4,9 +4,9 @@ Add 4 more articles in daily brief - Done
 Auth + subdomain deploy (api/admin) - Done
 Production smoke test + cleanup - Done
 
-Create new section - Media
-Add videos to admin/sidebar
-Create persistent volumes in railway for gallery/videos
+Create new section - Media - Done
+Add videos to admin/sidebar - Done
+Create persistent volumes in railway for gallery/videos - Done (see docs/MEDIA-STORAGE.md)
 Create application form for new staff
 create newsletter signup db tables
 Add newsletter sidebar option and create

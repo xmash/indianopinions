@@ -52,6 +52,22 @@ export type IntelligenceBrief = {
   next_date: string | null;
 };
 
+export type ApiMediaVideo = {
+  id: number;
+  title: string | null;
+  description: string | null;
+  video_url: string;
+  thumbnail_url: string | null;
+  duration_seconds: number | null;
+  category: string | null;
+  featured: boolean;
+  published_at: string | null;
+};
+
+type MediaVideoListResponse = {
+  data: ApiMediaVideo[];
+};
+
 import { getApiUrl } from '@/lib/api-url';
 
 async function fetchJson<T>(path: string): Promise<T | null> {
@@ -106,6 +122,10 @@ export function getBriefByDate(date: string): Promise<IntelligenceBrief | null> 
 
 export function getBriefDates(): Promise<string[]> {
   return fetchJson<{ dates: string[] }>('/api/brief/dates').then((payload) => payload?.dates ?? []);
+}
+
+export function getMediaVideos(): Promise<ApiMediaVideo[]> {
+  return fetchJson<MediaVideoListResponse>('/api/media/videos?per_page=48').then((payload) => payload?.data ?? []);
 }
 
 export { getArticlesByCategory } from '@/lib/articles';

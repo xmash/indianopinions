@@ -15,4 +15,5 @@ export const primaryNav: NavItem[] = [
   { label: 'Opinion', href: '/hubs/opinion' },
   { label: 'Analysis', href: '/hubs/analysis' },
   { label: 'Archive', href: '/hubs/archive' },
+  { label: 'Media', href: '/media' },
 ];

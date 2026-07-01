@@ -16,6 +16,7 @@ enum Permission: string
     case ManageCategories = 'manage_categories';
     case ManageTags = 'manage_tags';
     case ManageGallery = 'manage_gallery';
+    case ManageMedia = 'manage_media';
     case ManageStaff = 'manage_staff';
     case ManageLayout = 'manage_layout';
     case ViewPermissionsMatrix = 'view_permissions_matrix';
@@ -35,6 +36,7 @@ enum Permission: string
             self::ManageCategories => 'Manage categories',
             self::ManageTags => 'Manage tags',
             self::ManageGallery => 'Manage gallery',
+            self::ManageMedia => 'Manage media videos',
             self::ManageStaff => 'Manage staff',
             self::ManageLayout => 'Orchestrate homepage & hub pages',
             self::ViewPermissionsMatrix => 'View permissions matrix',

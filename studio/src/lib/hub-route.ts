@@ -29,6 +29,20 @@ export function hubFromPathname(pathname: string): HubRouteContext | null {
   const match = pathname.match(/^\/hubs\/([^/]+)(?:\/archive)?\/?$/);
 
   if (!match) {
+    if (pathname === '/media' || pathname.startsWith('/media/')) {
+      const hub = getHub('media');
+
+      if (!hub) {
+        return null;
+      }
+
+      return {
+        slug: 'media',
+        hub,
+        isArchive: false,
+      };
+    }
+
     return null;
   }
 

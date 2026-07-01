@@ -68,6 +68,8 @@ Editors curate slots at **Admin → Homepage** and **Admin → Hub Pages**. Empt
 | GET | `/api/categories` | All editorial hubs |
 | GET | `/api/categories/{slug}` | Hub with its articles |
 | POST | `/api/login` | Staff sign-in (Sanctum session; used by `/sign-in`) |
+| GET | `/api/media/videos` | Published videos for `/media` |
+| GET | `/api/media/videos/{id}` | Single video |
 | POST | `/api/newsletter/subscribe` | `{ "email": "..." }` |
 
 ## Deployment (Railway)

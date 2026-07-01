@@ -58,6 +58,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         Route::resource('gallery', Admin\GalleryController::class);
     });
 
+    Route::middleware('permission:manage_media')->group(function () {
+        Route::post('media-videos/upload', [Admin\MediaVideoController::class, 'upload'])->name('media-videos.upload');
+        Route::resource('media-videos', Admin\MediaVideoController::class)->except(['show']);
+    });
+
     Route::middleware('permission:manage_staff')->group(function () {
         Route::resource('users', Admin\UserController::class)->except(['show']);
     });
